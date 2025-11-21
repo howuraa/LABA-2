@@ -1,6 +1,6 @@
 import unittest
-from aa import DateValidator
-
+from main import DateValidator
+import os
 
 class TestDateValidator(unittest.TestCase):
 
@@ -120,6 +120,29 @@ class TestDateValidator(unittest.TestCase):
         for date in dates:
             if self.validator.is_valid_date(date):
                 raise AssertionError(f"Дата {date} должна быть ошибкой")
+
+# ===========================================================================================================================================================================================
+    def test_find_dates_in_existing_file(self):
+        test_filename = "test_dates.txt"
+
+        try:
+            results = self.validator.find_dates_from_file(test_filename)
+
+            if not isinstance(results, list):
+                raise AssertionError("Функция должна возвращать список")
+
+
+        except Exception as e:
+            raise AssertionError(f"Ошибка при чтении файла: {e}")
+
+    def test_find_dates_from_simple_url(self):
+        test_url = "http://www.датасегодня.рф/"
+
+        results = self.validator.find_dates_from_url(test_url)
+
+        if not isinstance(results, list):
+            raise AssertionError("Функция find_dates_from_url должна возвращать список")
+
 
 
 if __name__ == '__main__':
